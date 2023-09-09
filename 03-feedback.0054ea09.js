@@ -1,0 +1,2 @@
+!function(){var e=document.querySelector(".feedback-form");document.querySelector("input"),document.querySelector("textarea");e.addEventListener("input",(function(r){if(o=function(e){var t={};return new FormData(e.currentTarget).forEach((function(e,r){t[r]=e})),console.log(t),t}(r),a=JSON.parse(localStorage.getItem(t))||[],a.push(o),localStorage.setItem(t,JSON.stringify(a)),""===localStorage.getItem(t))return;e.value=localStorage.getItem(t);var o,a}));var t="feedback-form-state"}();
+//# sourceMappingURL=03-feedback.0054ea09.js.map

@@ -7,25 +7,17 @@ const player = new Player('vimeo-player', {
 });
 const LS_KEY = 'videoplayer-current-time';
 
-player.on('timeupdate', function (data) {
-  const timeVolume = localStorage.setItem(LS_KEY, data.seconds);
-});
+player.on('timeupdate', throttle(localTimeValue, 1000));
 
-const theme = localStorage.getItem(LS_KEY);
+function localTimeValue(data) {
+  return localStorage.setItem(LS_KEY, data.seconds);
+}
 
-player
-  .setCurrentTime(theme)
-  .then(function (seconds) {
-    // seconds = the actual time that the player seeked to
-  })
-  .catch(function (error) {
-    switch (error.name) {
-      case 'RangeError':
-        // the time was less than 0 or greater than the video’s duration
-        break;
+try {
+  const theme = localStorage.getItem(LS_KEY);
+} catch (error) {
+  console.log(error.name);
+  console.log(error.message);
+}
 
-      default:
-        // some other error occurred
-        break;
-    }
-  });
+player.setCurrentTime(theme);

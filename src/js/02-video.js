@@ -1,3 +1,4 @@
+import throttle from 'lodash.throttle';
 import Player from '@vimeo/player';
 
 const player = new Player('vimeo-player', {
@@ -5,19 +6,20 @@ const player = new Player('vimeo-player', {
   width: 640,
   height: 360,
 });
+
 const LS_KEY = 'videoplayer-current-time';
 
 player.on('timeupdate', throttle(localTimeValue, 1000));
 
 function localTimeValue(data) {
-  return localStorage.setItem(LS_KEY, data.seconds);
+  localStorage.setItem(LS_KEY, data.seconds);
 }
 
+const theme = localStorage.getItem(LS_KEY);
+
 try {
-  const theme = localStorage.getItem(LS_KEY);
+  player.setCurrentTime(theme);
 } catch (error) {
   console.log(error.name);
   console.log(error.message);
 }
-
-player.setCurrentTime(theme);

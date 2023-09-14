@@ -7,6 +7,7 @@ const emailEl = document.querySelector('.feedback-form input');
 formEl.addEventListener('submit', onFormSubmit);
 
 const formData = {};
+
 const KEY = 'feedback-form-state';
 populateForm();
 
@@ -29,7 +30,7 @@ function populateForm() {
 
 function onFormSubmit(evt) {
   evt.preventDefault();
+  console.log(JSON.parse(localStorage.getItem(KEY)));
   evt.target.reset();
   localStorage.removeItem(KEY);
-  console.log(formData);
 }

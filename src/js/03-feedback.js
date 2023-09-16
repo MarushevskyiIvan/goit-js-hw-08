@@ -5,13 +5,12 @@ const textareaEl = document.querySelector('.feedback-form textarea');
 const emailEl = document.querySelector('.feedback-form input');
 
 formEl.addEventListener('submit', onFormSubmit);
-
-const formData = {};
+formEl.addEventListener('input', throttle(saveFormValue, 500));
 
 const KEY = 'feedback-form-state';
-populateForm();
+let formData = JSON.parse(localStorage.getItem(KEY)) || {};
 
-formEl.addEventListener('input', throttle(saveFormValue, 500));
+populateForm();
 
 function saveFormValue(evt) {
   formData[evt.target.name] = evt.target.value;
@@ -30,7 +29,8 @@ function populateForm() {
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-  console.log(JSON.parse(localStorage.getItem(KEY)));
+  console.log(formData);
   evt.target.reset();
   localStorage.removeItem(KEY);
+  formData = {};
 }
